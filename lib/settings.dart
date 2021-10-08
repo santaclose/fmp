@@ -8,7 +8,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
 
-  List<Map> settingList = [{"name": "Library URL", "key": "library_url", "value": ""}];
+  List<Map> settingList = [{"name": "Library URL", "key": "library_url", "value": ""}, {"name": "Music Host (with port)", "key": "music_host", "value": ""}];
 
   _SettingsPageState() {
     _initAsync();
@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     initialValue: settingList[index]["value"],
                     onChanged: (newText) async {
                       final prefs = await SharedPreferences.getInstance();
-                      prefs.setString('library_url', newText);
+                      prefs.setString(settingList[index]["key"], newText);
                     },
                   ),
                 )

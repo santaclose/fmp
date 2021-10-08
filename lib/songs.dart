@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fmp/playback.dart';
 import 'package:fmp/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SongsPage extends StatefulWidget {
   final String url;
@@ -28,6 +29,7 @@ class _SongsPageState extends State<SongsPage> {
   }
 
   void _initAsync(String url) async {
+    final prefs = await SharedPreferences.getInstance();
     _songList.clear();
     var uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -45,7 +47,7 @@ class _SongsPageState extends State<SongsPage> {
         if (line.length == 0)
           continue;
         var parts = line.split('\\');
-        _songList.add({"name": parts[0], "audioUrl": parts[1], "downloaded": false});
+        _songList.add({"name": parts[0], "audioUrl": "http://" + prefs.getString("music_host") + "/" + parts[1], "downloaded": false});
       }
     });
   }
